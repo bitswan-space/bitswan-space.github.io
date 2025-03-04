@@ -5,7 +5,8 @@ theme: "PaperMod"
 
 params:
   description: "BitSwan's official devblog - currently testing"
-  author: "BitSwan Team"
+  author: "Jakub Skopal"
+  logo: "images/bitswan-logo-full-light.png"
   keywords: ["BitSwan", "Devblog", "Technology"]
   DateFormat: "2006-01-02"
   defaultTheme: "auto"
