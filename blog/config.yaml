@@ -1,0 +1,5 @@
+baseURL: https://bitswan-space.github.io/devblog/
+languageCode: en-us
+title: BitSwan Devblog
+theme: ["PaperMod"]
+
