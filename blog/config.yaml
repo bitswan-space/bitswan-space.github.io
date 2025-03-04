@@ -4,6 +4,81 @@ title: "BitSwan Devblog"
 theme: "hugo-PaperMod"
 
 params:
+  description: "BitSwan's official devblog - currently testing"
+  author: "BitSwan Team"
+  keywords: ["BitSwan", "Devblog", "Technology"]
+  DateFormat: "2006-01-02"
+  defaultTheme: "auto"
+  disableThemeToggle: false
+
   customCSS:
     - "css/custom.css"
 
+  # Navigation Menu
+  mainSections:
+    - posts
+  ShowBreadCrumbs: true
+  ShowPostNavLinks: true
+  ShowReadingTime: true
+  ShowToc: true
+  TocOpen: false
+
+  # Enable Authors & Metadata
+  ShowAuthor: true
+  ShowTaxonomies: true
+
+  # Social Media Links (update as needed)
+  socialIcons:
+    - name: github
+      url: "https://github.com/bitswan-space"
+    # - name: twitter
+    #   url: "https://twitter.com/bitswan"
+    # - name: linkedin
+    #   url: "https://www.linkedin.com/company/bitswan"
+
+# Author Data (Pulled from `data/authors.yaml`)
+# params.authors:
+#   skopal:
+#     name: "Jakub Skopal"
+#     image: "images/authors/skopal.jpg"
+# TODO - Figure out if to use this?
+
+# Output settings for SEO & GitHub Pages
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON 
+  section:
+    - HTML
+    - RSS
+  taxonomy:
+    - HTML
+    - RSS
+  term:
+    - HTML
+    - RSS
+
+# Deployment via GitHub Pages
+deployment:
+  targets:
+    - name: "GitHub Pages"
+      URL: "git@github.com:bitswan-space/devblog.git"
+
+# Markup Configurations
+markup:
+  goldmark:
+    renderer:
+      unsafe: true  # Allows raw HTML inside Markdown
+
+# Menu Configuration (Update as needed)
+menu:
+  main:
+    - identifier: posts
+      name: Blog
+      url: /posts/
+      weight: 1
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 2
