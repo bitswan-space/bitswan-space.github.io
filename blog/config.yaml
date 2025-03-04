@@ -1,5 +1,9 @@
-baseURL: https://bitswan-space.github.io/devblog/
-languageCode: en-us
-title: BitSwan Devblog
-theme: ["PaperMod"]
+baseURL: "https://bitswan-space.github.io/devblog/"
+languageCode: "en-us"
+title: "BitSwan Devblog"
+theme: "hugo-PaperMod"
+
+params:
+  customCSS:
+    - "css/custom.css"
 
