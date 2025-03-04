@@ -1,7 +1,7 @@
 baseURL: "https://bitswan-space.github.io/devblog/"
 languageCode: "en-us"
 title: "BitSwan Devblog"
-theme: "hugo-PaperMod"
+theme: "PaperMod"
 
 params:
   description: "BitSwan's official devblog - currently testing"
