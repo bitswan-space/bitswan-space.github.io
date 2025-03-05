@@ -1,32 +1,27 @@
-{{/* 
-    This partial displays date + reading time on the left
-    and author photo + name on the right, all on one line.
- */}}
- 
- {{- $authorKey := .Params.author -}}
- {{- $authorData := index site.Data.authors $authorKey -}}
- 
- <div class="post-meta-row" style="display: flex; justify-content: space-between; align-items: center;">
-   
-   <!-- LEFT: Date (and optional reading time) -->
-   <div class="post-meta-left">
-     <span>{{ .Date.Format "2006-01-02" }}</span>
-     {{- if .ReadingTime }}
-       <span> - {{ .ReadingTime }} min</span>
-     {{- end }}
-   </div>
- 
-   <!-- RIGHT: Author Photo + Name -->
-   {{- if $authorData }}
-     <div class="post-meta-right" style="display: flex; align-items: center;">
-       <img 
-         src="{{ site.BaseURL }}{{ $authorData.image }}" 
-         alt="{{ $authorData.name }}"
-         style="width: 32px; height: 32px; border-radius: 50%; margin-right: 8px;"
-       >
-       <span>{{ $authorData.name }}</span>
-     </div>
-   {{- end }}
- 
- </div>
- 
+{{- $authorKey := .Params.author -}}
+{{- $authorData := index site.Data.authors $authorKey -}}
+
+<div class="post-meta-row"
+     style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+  
+  <!-- LEFT: Date and Reading Time -->
+  <div class="post-meta-left" style="display: flex; align-items: center;">
+    <span>{{ .Date.Format "2006-01-02" }}</span>
+    {{- if .ReadingTime }}
+      <span style="margin-left: 8px;">- {{ .ReadingTime }} min</span>
+    {{- end }}
+  </div>
+
+  <!-- RIGHT: Author Name & Photo -->
+  {{- if $authorData }}
+    <div class="post-meta-right"
+         style="display: flex; align-items: center; gap: 8px;">
+      <!-- Name on the left -->
+      <span>{{ $authorData.name }}</span>
+      <!-- Photo on the far right -->
+      <img src="{{ site.BaseURL }}{{ $authorData.image }}"
+           alt="{{ $authorData.name }}"
+           style="width: 32px; height: 32px; border-radius: 50%;">
+    </div>
+  {{- end }}
+</div>
