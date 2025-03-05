@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* switching logos based on browser light/dark mode */
 .logo-light {
-  display: block;
+  display: inline-block;
 }
 .logo-dark {
   display: none;
@@ -36,5 +36,5 @@ html.dark .logo-light {
   display: none;
 }
 html.dark .logo-dark {
-  display: block;
+  display: inline-block;
 }
