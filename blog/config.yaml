@@ -38,11 +38,11 @@ params:
     # - name: linkedin
     #   url: "https://www.linkedin.com/company/bitswan"
 
-# Author Data (Pulled from `data/authors.yaml`)
-# params.authors:
-#   skopal:
-#     name: "Jakub Skopal"
-#     image: "images/authors/skopal.jpg"
+Author Data (Pulled from `data/authors.yaml`)
+params.authors:
+  skopal:
+    name: "Jakub Skopal"
+    image: "images/authors/skopal.jpg"
 # TODO - Figure out if to use this?
 
 # Output settings for SEO & GitHub Pages
