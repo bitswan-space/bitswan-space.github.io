@@ -1,27 +1,29 @@
 {{- $authorKey := .Params.author -}}
 {{- $authorData := index site.Data.authors $authorKey -}}
 
-<div class="post-meta-row"
+<div class="post-meta-container"
      style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
   
-  <!-- LEFT: Date and Reading Time -->
-  <div class="post-meta-left" style="display: flex; align-items: center;">
+  <!-- LEFT: Date & Reading Time -->
+  <div class="post-meta-left" style="display: flex; align-items: center; gap: 8px;">
     <span>{{ .Date.Format "2006-01-02" }}</span>
     {{- if .ReadingTime }}
-      <span style="margin-left: 8px;">- {{ .ReadingTime }} min</span>
+      <span>- {{ .ReadingTime }} min</span>
     {{- end }}
   </div>
 
   <!-- RIGHT: Author Name & Photo -->
   {{- if $authorData }}
     <div class="post-meta-right"
-         style="display: flex; align-items: center; gap: 8px;">
-      <!-- Name on the left -->
+         style="display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
+      <!-- Name to the left -->
       <span>{{ $authorData.name }}</span>
       <!-- Photo on the far right -->
-      <img src="{{ site.BaseURL }}{{ $authorData.image }}"
-           alt="{{ $authorData.name }}"
-           style="width: 32px; height: 32px; border-radius: 50%;">
+      <img
+        src="{{ site.BaseURL }}{{ $authorData.image }}"
+        alt="{{ $authorData.name }}"
+        style="width: 32px; height: 32px; border-radius: 50%;"
+      >
     </div>
   {{- end }}
 </div>
