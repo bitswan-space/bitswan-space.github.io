@@ -38,7 +38,7 @@ params:
     # - name: linkedin
     #   url: "https://www.linkedin.com/company/bitswan"
 
-Author Data (Pulled from `data/authors.yaml`)
+# Author Data (Pulled from `data/authors.yaml`)
 params.authors:
   skopal:
     name: "Jakub Skopal"
