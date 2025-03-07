@@ -25,6 +25,7 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+hugo_extended.deb
 
 # Ignore Node.js dependencies (if using npm in any subfolders)
 node_modules/

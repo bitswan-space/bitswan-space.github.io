@@ -6,6 +6,7 @@
   
   <!-- LEFT: Date & Reading Time -->
   <div class="post-meta-left" style="display: flex; align-items: center; gap: 8px;">
+    <span>kasdnlasndlkansdlakndslkan</span>
     <span>{{ .Date.Format "2006-01-02" }}</span>
     {{- if .ReadingTime }}
       <span>- {{ .ReadingTime }} min</span>
@@ -15,7 +16,7 @@
   <!-- RIGHT: Author Name & Photo -->
   {{- if $authorData }}
     <div class="post-meta-right"
-         style="display: flex; align-items: center; gap: 8px; justify-content: flex-end;">
+         style="display: inline-block; align-items: center; gap: 8px; justify-content: flex-end; position: fixed;">
       <!-- Name to the left -->
       <span>{{ $authorData.name }}</span>
       <!-- Photo on the far right -->
