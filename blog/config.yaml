@@ -14,7 +14,7 @@ params:
   disableThemeToggle: false
 
   customCSS:
-    - "css/custom.css"
+    - "assets/css/custom.css"
 
   # Navigation Menu
   mainSections:

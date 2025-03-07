@@ -23,6 +23,17 @@ h1, h2, h3, h4, h5, h6 {
   height: 50px;
 } */
 
+/* .entry-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* if you need left/right separation 
+}
+
+.entry-footer span {
+  display: inline-flex;
+  align-items: center;
+}
+ */
 
 /* switching logos based on browser light/dark mode */
 .logo-light {

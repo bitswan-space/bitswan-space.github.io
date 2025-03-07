@@ -2,9 +2,10 @@
   {{ $authorID := . }}
   {{ $author := index site.Data.authors $authorID }}
   {{ if $author }}
-    <div class="post-author">
-      <img src="{{ site.BaseURL }}{{ $author.image }}" alt="{{ $author.name }}" style="border-radius:50%; width:50px; height:50px;">
+    <div class="post-author" style="display: inline-flex;
+     align-items: center; gap: 8px; margin-left: auto;    ">
       <span>{{ $author.name }}</span>
+      <img src="{{ site.BaseURL }}{{ $author.image }}" alt="{{ $author.name }}" style="border-radius:50%; width:50px; height:50px;">
     </div>
   {{ else }}
     <span>{{ $authorID }}</span>
