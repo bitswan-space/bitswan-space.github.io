@@ -5,10 +5,10 @@ author: "dolezal"
 description: "Setting Up Your Workspace with Bitswan on a VPS or Cloud Provider"
 tags: ["Tutorial", "BitSwan", "Bitswan Workspace"]
 categories: ["Bitswan Workspace"]
-draft: true
+draft: false
 ---
 
-This post will give you a brief introduction into how to setup your workspace on your VPS or your favorite cloud provider!
+This post will give you a brief introduction into how to setup your workspace on your VPS, on your favorite cloud provider or locally!
 
 ### Prerequisities
 
@@ -31,11 +31,28 @@ Setup your DNS to have a domain `test.io` for example and a subdomain for your w
 
 3. **Create a Workspace**
 
-Connect to your VPS or cloud provider and create a workspace using the Bitswan Workspace CLI.
+```bash
+bitswan workspace init --domain=<your_domain> gitops_name
+```
+
+For local development run:
 
 ```bash
-bitswan-workspace-cli init --domain=<your_domain> gitops_name
+mkcerts --install
 ```
+
+and then run the command with --mkcert:
+
+```bash
+bitswan workspace init --domain=<your_domain> --mkcert gitops_name
+```
+
+after you add
+
+```bash
+127.0.0.1 <your_domain>
+```
+to your hosts at `/etc/hosts` you should be good to go. You have to have certs in order to have https working locally without any external domain, because without https the workspace won't be working corretly.
 
 4. **Access the Editor**
 
@@ -47,18 +64,24 @@ Example output:
 Bitswan Editor URL: https://gitops_name-editor.workspace.test.io
 Bitswan Editor Password: a1b2c3d4e5f6g7h8i9j0
 ------------GITOPS INFO------------
+GitOps ID: jachym-gitops
+GitOps URL: https://gitops_name-gitops.workspace.test.io
+GitOps Secret: 321ab12b13k12jk312kjjk12
 ```
 
 5. **Open The Editor**
 
-Open the URL in your browser and use the password to login.
-<!-- TODO fix images -->
-![BitswanEditorLoggingScreen](/static/images/webforms/url.png)
+Open the Editor URL in your browser and use the password to login. The site should look like this:
+![BitswanEditorLoggingScreen](/devblog/images/webforms/login_page.png)
+
+Give it the `Bitswan Editor Pasword` from the output.
 
 After logging in, you should see the editor with the Bitswan extension installed.
 
+![BitswanEditorVSCScreen](/devblog/images/webforms/vsc_page.png)
+
 7. **Start developing your automations**
-Copy any example automation folders from the examples/ directory into your workspace/ folder within the editor.
+Copy an example automation folder from the examples/ directory into your workspace/ folder within the editor.
 
 8. **Deploy your first automation**
 Click on Deploy Automation in the top-center Jupyter panel of the editor.
