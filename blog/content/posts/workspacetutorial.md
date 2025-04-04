@@ -1,7 +1,7 @@
 ---
 title: "Getting Started with Bitswan Workspace"
 date: 2025-03-25T10:36:05+01:00
-author: "dolezal"
+author: "dolezal_jachym"
 description: "Setting Up Your Workspace with Bitswan on a VPS or Cloud Provider"
 tags: ["Tutorial", "BitSwan", "Bitswan Workspace"]
 categories: ["Bitswan Workspace"]
@@ -19,11 +19,13 @@ This post will give you a brief introduction to setting up your workspace on you
 
 1. **Install Bitswan Workspace CLI**
 
-You can find the installation instructions for the Bitswan Workspace CLI [here](https://github.com/bitswan-space/bitswan-workspaces)
-
+##### Linux / WSL
 ```bash
-curl -L https://github.com/bitswan-space/bitswan-gitops-cli/releases/latest/download/bitswan-gitops-cli_Linux_x86_64.tar.gz | tar -xz
+LATEST_VERSION=$(curl -s https://api.github.com/repos/bitswan-space/bitswan-workspaces/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
+curl -L "https://github.com/bitswan-space/bitswan-workspaces/releases/download/${LATEST_VERSION}/bitswan-workspaces_${LATEST_VERSION}_linux_amd64.tar.gz" | tar -xz
 ```
+
+You can find the installation instructions and command for MacOS [here](https://github.com/bitswan-space/bitswan-workspaces)
 
 3. **Setup DNS**
 
@@ -41,12 +43,12 @@ For local development run:
 mkcerts --install
 ```
 
-In this example we will use `workspace.local` domain for the local development
+In this example we will use `workspace.localhost` domain for the local development
 
 and then run the command with --mkcert:
 
 ```bash
-bitswan workspace init --domain=workspace.local --mkcert <gitops_name>
+bitswan workspace init --domain=workspace.localhost --mkcert <gitops_name>
 ```
 
 Update your hosts file by adding this:
