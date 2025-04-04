@@ -41,7 +41,7 @@ For local development run:
 mkcerts --install
 ```
 
-In this example we will use workspace.local domain for the local development
+In this example we will use `workspace.local` domain for the local development
 
 and then run the command with --mkcert:
 
@@ -91,8 +91,9 @@ Click on Deploy Automation in the top-center Jupyter panel of the editor.
 9. **Manage your automations**
 Use the Bitswan VS Code extension (automatically installed via the CLI) to monitor automation status, view logs, restart, or stop processes as needed.
 
-### Conclusion
-You have successfully set up your Bitswan workspace on a VPS or cloud provider. You're now ready to begin developing and deploying your own automations directly within the browser-based environment! Let me know if you want a shortened version or one with extra formatting like collapsible sections or callouts.
-
+--------------
 
 If you want to get started with the editor to develop and deploy your first automation, check out our blog post: *Getting Started with Bitswan in the VS Code Editor*.
+
+### Conclusion
+You have successfully set up your Bitswan workspace on a VPS or cloud provider. You're now ready to begin developing and deploying your own automations directly within the browser-based environment! Let me know if you want a shortened version or one with extra formatting like collapsible sections or callouts.
