@@ -1,11 +1,11 @@
 baseURL: "https://bitswan-space.github.io/devblog/"
 languageCode: "en-us"
-title: "BitSwan Devblog"
+title: "Devblog"
 theme: "PaperMod"
 
 params:
-  description: "BitSwan's official devblog - currently testing"
-  author: "Jakub Skopal"
+  description: "BitSwan's official devblog"
+  author: "Jachym Dolezal"
   logo_light: "images/bitswan-logo-full-light.png"
   logo_dark: "images/bitswan-logo-full.png"
   keywords: ["BitSwan", "Devblog", "Technology"]
@@ -50,7 +50,7 @@ outputs:
   home:
     - HTML
     - RSS
-    - JSON 
+    - JSON
   section:
     - HTML
     - RSS
@@ -71,7 +71,7 @@ deployment:
 markup:
   goldmark:
     renderer:
-      unsafe: true  # Allows raw HTML inside Markdown
+      unsafe: true # Allows raw HTML inside Markdown
 
 # Menu Configuration (Update as needed)
 menu:
