@@ -26,12 +26,13 @@ curl -L https://github.com/bitswan-space/bitswan-gitops-cli/releases/latest/down
 ```
 
 3. **Setup DNS**
+
 Setup your DNS to have a domain `test.io` for example and a subdomain for your workspace `workspace.test.io` and a wildcard for subdomains `*.workspace.test.io`.
 
 3. **Create a Workspace**
 
 ```bash
-bitswan workspace init --domain=<your_domain> gitops_name
+bitswan workspace init --domain=workspace.test.io <gitops_name>
 ```
 
 For local development run:
@@ -40,16 +41,18 @@ For local development run:
 mkcerts --install
 ```
 
+In this example we will use workspace.local domain for the local development
+
 and then run the command with --mkcert:
 
 ```bash
-bitswan workspace init --domain=<your_domain> --mkcert gitops_name
+bitswan workspace init --domain=workspace.local --mkcert <gitops_name>
 ```
 
 Update your hosts file by adding this:
 
 ```bash
-127.0.0.1 <your_domain>
+127.0.0.1 workspace.local
 ```
 at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
 
