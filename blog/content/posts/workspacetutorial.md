@@ -8,8 +8,7 @@ categories: ["Bitswan Workspace"]
 draft: false
 ---
 
-This post will give you a brief introduction into how to setup your workspace on your VPS, on your favorite cloud provider or locally!
-
+This post will give you a brief introduction to setting up your workspace on your VPS, whether on your favorite cloud provider or locally!
 ### Prerequisities
 
 - `git`, `linux/macos` environment, `docker`, and `bitswan-workspace-cli`
@@ -47,16 +46,16 @@ and then run the command with --mkcert:
 bitswan workspace init --domain=<your_domain> --mkcert gitops_name
 ```
 
-after you add
+Update your hosts file by adding this:
 
 ```bash
 127.0.0.1 <your_domain>
 ```
-to your hosts at `/etc/hosts` you should be good to go. You have to have certs in order to have https working locally without any external domain, because without https the workspace won't be working corretly.
+at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
 
 4. **Access the Editor**
 
-After running the initialization command, the CLI will provide you with a URL and a password. If everything is configured correctly, you should see your VS Code-based editor successfully deployed.
+After running the initialization command, the CLI will provide you with a URL and a password. If everything is configured correctly, you should see your VS Code editor successfully deployed.
 
 Example output:
 ```bash
@@ -91,3 +90,6 @@ Use the Bitswan VS Code extension (automatically installed via the CLI) to monit
 
 ### Conclusion
 You have successfully set up your Bitswan workspace on a VPS or cloud provider. You're now ready to begin developing and deploying your own automations directly within the browser-based environment! Let me know if you want a shortened version or one with extra formatting like collapsible sections or callouts.
+
+
+If you want to get started with the editor to develop and deploy your first automation, check out our blog post: *Getting Started with Bitswan in the VS Code Editor*.
