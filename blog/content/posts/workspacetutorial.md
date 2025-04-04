@@ -8,7 +8,8 @@ categories: ["Bitswan Workspace"]
 draft: false
 ---
 
-This post will give you a brief introduction to setting up your workspace on your VPS, whether on your favorite cloud provider or locally!
+You can create a Bitswan workspace and run Bitswan automations anywhere whether in a VPS on your favorite cloud provider or on your environment locally! This post will run you through the process of setting up a Bitswan workspace complete with an IDE for building your automations and and a runtime system where you can deploy them with the click of a button.
+
 ### Prerequisities
 
 - `git`, `linux/macos` environment, `docker`, and `bitswan-workspace-cli`
@@ -34,7 +35,7 @@ Setup your DNS to have a domain `test.io` for example and a subdomain for your w
 3. **Create a Workspace**
 
 ```bash
-bitswan workspace init --domain=workspace.test.io <gitops_name>
+bitswan workspace init --domain=workspace.test.io <workspace_name>
 ```
 
 For local development run:
@@ -48,13 +49,13 @@ In this example we will use `workspace.localhost` domain for the local developme
 and then run the command with --mkcert:
 
 ```bash
-bitswan workspace init --domain=workspace.localhost --mkcert <gitops_name>
+bitswan workspace init --domain=workspace.localhost --mkcert <workspace_name>
 ```
 
 Update your hosts file by adding this:
 
 ```bash
-127.0.0.1 workspace.local
+127.0.0.1 workspace.localhost
 ```
 at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
 
@@ -65,24 +66,24 @@ After running the initialization command, the CLI will provide you with a URL an
 Example output:
 ```bash
 ------------BITSWAN EDITOR INFO------------
-Bitswan Editor URL: https://gitops_name-editor.workspace.test.io
+Bitswan Editor URL: https://workspace_name-editor.workspace.test.io
 Bitswan Editor Password: a1b2c3d4e5f6g7h8i9j0
 ------------GITOPS INFO------------
-GitOps ID: jachym-gitops
-GitOps URL: https://gitops_name-gitops.workspace.test.io
+GitOps ID: workspace_name
+GitOps URL: https://workspace_name-gitops.workspace.test.io
 GitOps Secret: 321ab12b13k12jk312kjjk12
 ```
 
 5. **Open The Editor**
 
 Open the Editor URL in your browser and use the password to login. The site should look like this:
-![BitswanEditorLoggingScreen](/devblog/images/webforms/login_page.png)
+![BitswanEditorLoggingScreen](/images/webforms/login_page.png)
 
 Give it the `Bitswan Editor Pasword` from the output.
 
 After logging in, you should see the editor with the Bitswan extension installed.
 
-![BitswanEditorVSCScreen](/devblog/images/webforms/vsc_page.png)
+![BitswanEditorVSCScreen](/images/webforms/vsc_page.png)
 
 7. **Start developing your automations**
 Copy an example automation folder from the examples/ directory into your workspace/ folder within the editor.
