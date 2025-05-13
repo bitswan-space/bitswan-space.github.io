@@ -7,10 +7,6 @@ blog/hugo_stats.json
 blog/cache/
 blog/.hugo_build.lock
 
-# Ignore Hugo themes (unless using submodules)
-blog/themes/* 
-!blog/themes/PaperMod  # If using PaperMod as a submodule
-
 # ====== General Git Ignore for Project ======
 
 # Ignore system files
