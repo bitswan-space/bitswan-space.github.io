@@ -42,6 +42,22 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
+            <a href="https://bitswan.ai" target="_blank" rel="noopener noreferrer" style="margin-right: 15px;">
+        {{- if (eq site.Params.defaultTheme "dark") }}
+            <img src="{{ (site.Params.logo_dark | absURL) }}" alt="BitSwan Logo" height="30">
+        {{- else if (eq site.Params.defaultTheme "light") }}
+            <img src="{{ (site.Params.logo_light | absURL) }}" alt="BitSwan Logo" height="30">
+        {{- else }}
+            <img src="{{ (site.Params.logo_light | absURL) }}" alt="BitSwan Logo" height="30" class="light-logo">
+            <img src="{{ (site.Params.logo_dark | absURL) }}" alt="BitSwan Logo" height="30" class="dark-logo" style="display: none;">
+            <script>
+                if (document.body.classList.contains('dark')) {
+                    document.querySelector('.light-logo').style.display = 'none';
+                    document.querySelector('.dark-logo').style.display = 'inline';
+                }
+            </script>
+        {{- end }}
+    </a>
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
             <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">

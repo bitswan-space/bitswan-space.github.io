@@ -6,8 +6,8 @@ theme: "PaperMod"
 params:
   description: "BitSwan's official devblog"
   author: "Jachym Dolezal"
-  logo_light: "images/bitswan-logo-full-light.png"
-  logo_dark: "images/bitswan-logo-full.png"
+  logo_light: "images/bitswan-logo-full.png"
+  logo_dark: "images/bitswan-logo-full-light.png"
   keywords: ["BitSwan", "Devblog", "Technology"]
   DateFormat: "2006-01-02"
   defaultTheme: "auto"
@@ -37,13 +37,6 @@ params:
     #   url: "https://twitter.com/bitswan"
     # - name: linkedin
     #   url: "https://www.linkedin.com/company/bitswan"
-
-# Author Data (Pulled from `data/authors.yaml`)
-params.authors:
-  skopal:
-    name: "Jakub Skopal"
-    image: "images/authors/skopal.jpg"
-# TODO - Figure out if to use this?
 
 # Output settings for SEO & GitHub Pages
 outputs:
@@ -82,5 +75,5 @@ menu:
       weight: 1
     - identifier: about
       name: About
-      url: /about/
+      url: https://bitswan.ai/team/
       weight: 2
