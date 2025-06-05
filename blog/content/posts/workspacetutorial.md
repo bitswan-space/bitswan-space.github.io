@@ -33,31 +33,31 @@ You can find the installation instructions and command for MacOS [here](https://
 Setup your DNS to have a domain `test.io` for example and a subdomain for your workspace `workspace.test.io` and a wildcard for subdomains `*.workspace.test.io`.
 
 3. **Create a Workspace**
+- a) In general, the setup is
+   ```bash
+   bitswan workspace init --domain=workspace.test.io <workspace_name>
+   ```
 
-```bash
-bitswan workspace init --domain=workspace.test.io <workspace_name>
-```
-
-For local development run:
-
-```bash
-mkcerts --install
-```
-
-In this example we will use `workspace.localhost` domain for the local development
-
-and then run the command with --mkcert:
-
-```bash
-bitswan workspace init --domain=workspace.localhost --mkcert <workspace_name>
-```
-
-Update your hosts file by adding this:
-
-```bash
-127.0.0.1 workspace.localhost
-```
-at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
+- b) For local development run:
+    
+   ```bash
+   mkcert --install
+   ```
+    
+   In this example we will use `workspace.localhost` domain for the local development
+    
+   and then run the command with --mkcert:
+    
+   ```bash
+   bitswan workspace init --domain=workspace.localhost --mkcerts <workspace_name>
+   ```
+    
+   Update your hosts file by adding this:
+    
+   ```bash
+   127.0.0.1 workspace.localhost
+   ```
+   at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
 
 4. **Access the Editor**
 
