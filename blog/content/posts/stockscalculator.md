@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with BitSwan Jupyter Automations: Creating Your First Automation"
+title: "Checking your stocks with a Bitswan Automation"
 date: 2025-06-05T13:36:05+01:00
 author: "dolezal_jachym"
 description: "Learn how to build your first automation using BitSwan Jupyter with a WebForm source. This step-by-step tutorial covers the basics of form creation, event handling, and pipeline execution."
