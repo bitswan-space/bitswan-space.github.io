@@ -1,7 +1,7 @@
 ---
 title: "Getting Started with BitSwan Jupyter Automations: Creating Your First Automation"
-date: 2025-03-25T10:36:05+01:00
-author: "dolezal"
+date: 2025-06-05T13:36:05+01:00
+author: "dolezal_jachym"
 description: "Learn how to build your first automation using BitSwan Jupyter with a WebForm source. This step-by-step tutorial covers the basics of form creation, event handling, and pipeline execution."
 tags: ["Automations","Tutorial", "BitSwan","Jupyter"]
 categories: ["BitSwan Automations"]
@@ -14,7 +14,7 @@ We will follow an automation that is present in our examples: [StocksCalculator]
 
 This tutorial will give you an example of an automation where you can select a date and the pipeline will display a graph of the several stocks and their performance at that day!
 
-The result automation will look like this one: ![automation](https://jachymdolezal-stockscalculator.jachymdolezal.bswn.io/)
+The resulting automation will look like this: [automation](https://jachymdolezal-stockscalculator.jachymdolezal.bswn.io/)
 
 ## Jupyter Automation
 
@@ -26,15 +26,12 @@ from bspump.jupyter import *
 from bspump.http.web.server import *
 import requests
 import pandas as pd
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
+import matplotlib
 import time
 import io
-
-STOCKS = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "JPM", "NFLX", "AMD"]
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-}
+from datetime import date
+import base64
 ```
 
 The first cell as usual imports the necessary modules.
@@ -47,86 +44,19 @@ The rest of libraries are the usual libraries you might know using python.
 - `requests` for sending requests via http/https
 - `datetime` working with dates etc.
 
-We also define constants we will use later in the example
-
-### 2. Define an Initial Event (Optional)
+### 2. Define an Initial Event (For Dev Execution)
 ```python
 event = {
-    "form" : {"textfile": "text"}
+    "form": {
+        "Year": 2025,
+        "Month": 6,
+        "Day": 5
+    }
 }
 ```
-This optional cell defines an `event` dictionary that is an optional object that can be used during development, but has no effect on the pipeline during the production.
+This optional cell defines an `event` dictionary, alowing us to execute all cells during development to test the automation.
 
-### 3. Define functions for this particular example
-
-These are just normal python functions we will use in this case
-```python
-def fetch_yahoo_price(ticker, start_date, end_date):
-    start_ts = int(time.mktime(start_date.timetuple()))
-    end_ts = int(time.mktime(end_date.timetuple()))
-
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
-    params = {
-        "period1": start_ts,
-        "period2": end_ts,
-        "interval": "1d"
-    }
-
-    try:
-        resp = requests.get(url, params=params, headers=HEADERS)
-        data = resp.json()
-
-        result = data["chart"]["result"][0]
-        timestamps = result["timestamp"]
-        closes = result["indicators"]["quote"][0]["close"]
-
-        dates = [datetime.fromtimestamp(ts).strftime('%Y-%m-%d') for ts in timestamps]
-        return pd.Series(closes, index=dates)
-    except Exception as e:
-        print(f"Error for {ticker}: {e}")
-        return None
-
-
-def get_price_changes(tickers, date_str):
-    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    day_before = date_obj - timedelta(days=1)
-    day_after = date_obj + timedelta(days=1)
-
-    changes = {}
-    for ticker in tickers:
-        series = fetch_yahoo_price(ticker, day_before, day_after)
-        print(series)
-        if series is not None and date_str in series and day_before.strftime("%Y-%m-%d") in series:
-            prev = series[day_before.strftime("%Y-%m-%d")]
-            curr = series[date_str]
-            if prev and curr:
-                change = ((curr - prev) / prev) * 100
-                changes[ticker] = change
-    return changes
-
-def plot_with_pandas(changes, date_str):
-    df = pd.DataFrame(list(changes.items()), columns=["Ticker", "Change (%)"])
-    df.sort_values("Change (%)", ascending=False, inplace=True)
-
-    ax = df.plot.bar(
-        x="Ticker",
-        y="Change (%)",
-        title=f"Stock Change (%) on {date_str}",
-        xlabel="Ticker",
-        ylabel="Change (%)",
-        grid=True,
-        figsize=(10, 5)
-    )
-
-    buf = io.BytesIO()
-    ax.figure.savefig(buf, format="jpeg")
-    return buf
-    print(f"✅ Chart saved as 'stock_changes_{date_str}.jpeg'")
-```
-
-Feel free to copy them.
-
-### 4. Define the Automation Pipeline
+### 3. Define the Automation Pipeline
 ```python
 auto_pipeline(
     source=lambda app, pipeline: WebFormSource(app, pipeline, route="/",
@@ -156,41 +86,248 @@ You can mix and match different sources and sinks to create your desired automat
 
 TODO: [Add a link to the documentation with a full list of available Sources and Sinks.]
 
-### 5. Handle Form Submission
+### 5. helper output formatting
+
+You can copy the following functions. They define how the automation's output is displayed to the user using HTML and CSS styling to ensure a clean and user-friendly presentation.
 
 ```python
-form = event["form"]
-parsed_date = date(form["Year"], form["Month"], form["Day"]).strftime("%Y-%m-%d")
-try:
-    changes = get_price_changes(STOCKS, parsed_date)
-    if not changes:
-        print("⚠️ No data found. Market may have been closed.")
-        return
-    top_stock = max(changes, key=changes.get)
-    print(f"📈 Most increasing stock on {parsed_date}: {top_stock} ({changes[top_stock]:.2f}%)")
-    img_data = plot_with_pandas(changes, parsed_date)
-    event["response"] = img_data.getvalue()
-    event["content_type"] = "image/jpeg"
+def output_layout(parsed_date,top_stock_name,top_stock_change,img_data) -> str:
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Stock Performance</title>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                text-align: center;
+                background-color: #f5f5f5;
+                padding: 40px;
+            }}
+            h1 {{
+                color: #333;
+                margin-bottom: 20px;
+            }}
+            img {{
+                border: 1px solid #ccc;
+                max-width: 90%;
+                height: auto;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }}
+            button {{
+                background-color: #0275d8;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+            }}
+            button:hover {{
+                background-color: #025aa5;
+            }}
+        </style>
+    </head>
+    <body>
+        <h1>📈 Top Stock on {parsed_date}: {top_stock_name} (change {top_stock_change:.2f}%)</h1>
+        <img src="data:image/jpeg;base64,{base64.b64encode(img_data.getvalue()).decode()}" alt="Stock Performance">
+        <button onclick="window.history.back()">🔙 Go Back</button>
+    </body>
+    </html>
+    """
+    return html
 
-except Exception as e:
-    print(f"❌ Error: {e}")
+
+def output_no_data_found() -> str:
+    html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+       <title>No Data Found</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                background-color: #f5f5f5;
+                padding: 40px;
+            }
+            h1 {
+                color: #d9534f;
+                margin-bottom: 20px;
+            }
+            p {
+                color: #555;
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            button {
+                background-color: #0275d8;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #025aa5;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>⚠️ No Stock Data Found</h1>
+        <p>Markets might be closed, try a different date.</p>
+        <button onclick="window.history.back()">🔙 Go Back</button>
+    </body>
+    </html>
+    """
+    return html
+```
+
+### 6. Handle pipeline logic, Global variables and Input Handling
+
+```python
+# Global variables
+STOCKS = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "JPM", "NFLX", "AMD"]
+
+HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        }
+
+# Input processing
+form = event["form"]
+parsed_date_str = date(form["Year"], form["Month"], form["Day"]).strftime("%Y-%m-%d")
+parsed_date = datetime.strptime(parsed_date_str, "%Y-%m-%d")
+day_before = parsed_date - timedelta(days=1)
+day_after = parsed_date + timedelta(days=1)
 ```
 Cell below the `automation_pipeline` definition are executed when the pipeline is triggered.
 
 In this case:
 - Once the form is sumitted, `WebFormSource` creates an event.
-- The `event` object includec the submitted `form` data.
-- We consturct a new `response` field in the event using the selected form input values.
+- The `event` object includes the submitted `form` data.
 
-If the evnt is defined in the last cell of the notebook, it will be **automatically sent to the `WebSink`**.
+We also define global variables that are used later on.
 
-It is important to mention that your automation can have any functionality you desire. The `WebFormSource` can only be used just as a trigger for your automation, what you do with jupyter cells and the event data is up to you.
+### 7. Cell for fetching Yahoo data and performing calculations
 
-For achieve our goal we simply date form data from the event and create `parsed_date` which we can plug in into our implementation of the stocks retrieval and `plot_with_pandas` function. The image is returned as a buffer which we can then set as the response in the event and by changing the `content_type` to `image/json` we can render it in our browser.
+```python
+# Initialize change tracking
+changes = {}
 
-Wow! You've just created your first automation using a WebForm source. 🎉
+# Iterate over each ticker and fetch data
+for ticker in STOCKS:
+    # Convert datetime to UNIX timestamps
+    start_ts = int(time.mktime(day_before.timetuple()))
+    end_ts = int(time.mktime(day_after.timetuple()))
+
+    # Prepare API request
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
+    params = {
+        "period1": start_ts,
+        "period2": end_ts,
+        "interval": "1d"
+    }
+
+    try:
+        response = requests.get(url, params=params, headers=HEADERS)
+        data = response.json()
+
+        result = data["chart"]["result"][0]
+        timestamps = result["timestamp"]
+        closes = result["indicators"]["quote"][0]["close"]
+
+        # Convert timestamps to readable dates
+        dates = [datetime.fromtimestamp(ts).strftime('%Y-%m-%d') for ts in timestamps]
+        series = pd.Series(closes, index=dates)
+
+        # Compute percent change if both dates exist in the series
+        if parsed_date_str in series and day_before.strftime("%Y-%m-%d") in series:
+            previous_close = series[day_before.strftime("%Y-%m-%d")]
+            current_close = series[parsed_date_str]
+            if previous_close and current_close:
+                percent_change = ((current_close - previous_close) / previous_close) * 100
+                changes[ticker] = percent_change
+
+    except Exception as e:
+        print(f"Error fetching data for {ticker}: {e}")
+```
+
+In this cell, we process the input data and perform most of the logic needed to obtain results that can then be plotted.
+
+### 8. Cell for plotting the Stock changes.
+
+```python
+# install matplotlib if you experience error with the plot while executing the cells in during dev
+# %pip install matplotlib
+
+# Prepare output if data is available
+if changes:
+    df = pd.DataFrame(list(changes.items()), columns=["Ticker", "Change (%)"])
+    df.sort_values("Change (%)", ascending=False, inplace=True)
+
+    # Plotting
+    ax = df.plot.bar(
+        x="Ticker",
+        y="Change (%)",
+        title=f"Stock Change (%) on {parsed_date_str}",
+        xlabel="Ticker",
+        ylabel="Change (%)",
+        grid=True,
+        figsize=(10, 7)
+    )
+
+    # Save plot to buffer
+    buf = io.BytesIO()
+    ax.figure.savefig(buf, format="jpeg")
+    img_data = buf
+```
+
+This cell defines the DataFrame and the plot layout. If you created a mock event earlier, you can test the plot and should see something like this:
+
+![StockChangePlot](/images/stockscalculator/output.png)
+
+As you can see, on July 5th, 2025, Tesla stock experienced a sharp downward spike.
+
+### 8. Prepare the output for the WebSink
+
+```python
+if changes:
+    # Get top stock info
+    top_stock = max(changes, key=changes.get)
+    top_stock_name = top_stock
+    top_stock_change = changes[top_stock]
+
+    # Build and set response
+    response = output_layout(
+        parsed_date=parsed_date_str,
+        top_stock_name=top_stock_name,
+        top_stock_change=top_stock_change,
+        img_data=img_data
+    )
+
+    event["response"] = response
+    event["content_type"] = "text/html"
+
+else:
+    event["response"] = output_no_data_found()
+    event["content_type"] = "text/html"
+```
+
+We consturct a new `response` field in the event using the helper styling functions. Note that we set the `content_type` to `text/html`, so the HTML is rendered properly.
+
+Since this is the last cell of the automation and it contains the event object, it will be automatically sent as input to the **WebSink**.
+
+It's important to note that your automation can include any functionality you need. The WebFormSource simply acts as a trigger - what you do with the Jupyter cells and the event data is entirely up to you.
+
+**Wow! You've just created your first automation using a WebForm source.**
 
 ### 6. Run the automation
+
+You can execute the cells to check whether the data loads and the plot renders correctly without errors. Once you're satisfied, you can deploy the automation using the BitSwan extension.
+
+If you’re unable to deploy the automation yourself, you can try this live version: [automation](https://jachymdolezal-stockscalculator.jachymdolezal.bswn.io/)
+
 
 ### Conclusion
 
