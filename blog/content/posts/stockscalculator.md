@@ -14,6 +14,8 @@ We will follow an automation that is present in our examples: [StocksCalculator]
 
 This tutorial will give you an example of an automation where you can select a date and the pipeline will display a graph of the several stocks and their performance at that day!
 
+The result automation will look like this one: ![automation](https://jachymdolezal-stockscalculator.jachymdolezal.bswn.io/)
+
 ## Jupyter Automation
 
 If you have a BitSwan workspace with the **VS Code editor** and the **BitSwan extension** installed, you’re ready to get started. Below is an example automation script. We’ll go through it cell by cell and explain each part of the pipeline.
