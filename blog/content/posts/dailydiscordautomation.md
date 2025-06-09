@@ -181,7 +181,7 @@ Give it a name and copy the Webhook URL.
 Then use the code below to post the plot:
 
 ```python
-webhook_url = '<your_webhook_url>'
+webhook_url = os.environ['DISCORD_WEBHOOK_URL']
 image_path = './output.png'
 if changes:
     with open(image_path, 'rb') as f:
@@ -196,6 +196,26 @@ else:
         data={'content': 'No stock data available today.'}
     )
 ```
+
+### Secrets
+
+Now it's time to explain how to store secrets securely using Bitswan. Navigate to the `secrets` directory and create a file named `discord_secret`. In that file, add the following:
+```bash
+DISCORD_WEBHOOK_URL=<YOUR_WEBHOOK_URL>
+```
+
+Next, update your `piplines.conf` file by adding a `secrets` section where you specify the name of the secrets file:
+
+```
+[deployment]
+pre=<YOUR_PRE>
+expose=true
+
+[secrets]
+groups=discord_secret
+```
+
+Great! You can now use the secrets in your automation without exposing them directly in your code.
 
 Now, deploy your automation using the BitSwan VS Code extension. When triggered, it will post a message like this:
 
