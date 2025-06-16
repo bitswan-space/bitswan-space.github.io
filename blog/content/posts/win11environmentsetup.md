@@ -53,13 +53,14 @@ If WSL, VSCode, and Jupyter extensions are already installed, jump directly to:
 ---
 
 ### Installing WSL
-1. Open **PowerShell** as Administrator.
-![Alt Text](![Alt Text](relative/or/full/path/to/image.png))
+1. Open **PowerShell** as Administrator.  
+![PowerShell](\images\win11environmentsetup\win11environmentsetup-PowerShell.png)  
 
 2. Run:
 ```powershell
 wsl --install
 ```
+![WSLInstallation](\images\win11environmentsetup\win11environmentsetup-WSLInstallation.png)  
 3. Restart your PC when prompted.
 
 ### Installing VSCode
@@ -70,6 +71,7 @@ wsl --install
 1. Open VSCode.
 2. Click on **Extensions** (Ctrl+Shift+X).
 3. Search for "Jupyter" and install it.
+![gettingAJupyterNotebookExtension](\images\win11environmentsetup\win11environmentsetup-jupyterPlugin.png)
 
 ---
 
@@ -80,6 +82,7 @@ wsl --install
 git clone git@github.com:bitswan-space/BitSwan.git
 cd BitSwan
 ```
+![cloningARepo](\images\win11environmentsetup\win11environmentsetup-cloningARepository.png)
 
 ---
 
@@ -98,8 +101,8 @@ source venv/bin/activate
 ```bash
 pip3 install -e "[dev]"
 ```
+![activatingEnvironment](\images\win11environmentsetup\win11environmentsetup-activatingTheEnvironment.png)
 
----
 
 ## Running Bitswan Pipelines
 Run a pipeline example using:
@@ -110,8 +113,11 @@ Optionally watch for changes:
 ```bash
 bitswan notebook examples/WebForms/main.ipynb --watch
 ```
+![RunningAutomaton](/images/win11environmentsetup/win11environmentsetup-runningAnAutomaton.png)
 
----
+You can test the basic functionality of some of the examples on **http://localhost:8080** in your browser:  
+![localTesting](\images\win11environmentsetup\win11environmentsetup-localTest.png)
+
 
 ## Testing Pipelines
 Run pipeline tests:
@@ -123,6 +129,7 @@ Automatically re-run tests on file changes:
 ```bash
 bitswan notebook examples/Testing/InspectError/main.ipynb --test --watch
 ```
+![RunningTests](/images/win11environmentsetup/win11environmentsetup-runningTests.png)
 
 ---
 
