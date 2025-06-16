@@ -1,3 +1,7 @@
 dolezal_jachym:
   name: "Jachym Dolezal"
   image: "images/authors/dolezal.png"
+
+patrik_kiseda:
+  name: "Patrik Kiseda"
+  image: "images/authors/kiseda.jpg"
