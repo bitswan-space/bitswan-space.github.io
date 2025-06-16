@@ -12,7 +12,7 @@ You can create a Bitswan workspace and run Bitswan automations anywhere whether 
 
 ### Prerequisities
 
-- `git`, `linux/macos` environment, `docker`, and `bitswan-workspace-cli`
+- `git`, `linux/macos` environment, `docker`, and `bitswan-workspaces`
 
 ---
 
@@ -28,36 +28,64 @@ curl -L "https://github.com/bitswan-space/bitswan-workspaces/releases/download/$
 
 You can find the installation instructions and command for MacOS [here](https://github.com/bitswan-space/bitswan-workspaces)
 
-3. **Setup DNS**
+2. **Setup DNS**
 
 Setup your DNS to have a domain `test.io` for example and a subdomain for your workspace `workspace.test.io` and a wildcard for subdomains `*.workspace.test.io`.
+- a) In case you have a publicly accessible IP address, you can set up DNS entries with your domain registrar or DNS provider to point `workspace.test.io` and `*.workspace.test.io` to your server's IP address.
+- b) In case you want to resolve these addresses locally, you can:
+  - 1.)Add the entries to your system's host file to resolve these domains locally.
+    In this case, you can add the following lines to your `/etc/hosts` file:
+    ```bash
+    127.0.0.1    test.io
+    127.0.0.1    workspace.test.io
+    ```
+  - 2.) In case of wildcards, you can use a tool like `dnsmasq` to resolve wildcard domains locally.
+    
+    Install `dnsmasq`:
+    ```bash
+    sudo apt install dnsmasq
+    ```
+    Configure `dnsmasq` by editing the `/etc/dnsmasq.conf` file and adding the following lines:
+    ```bash
+    address=/.workspace.test.io/127.0.0.1
+    ```
+    Start the `dnsmasq` service:
+    ```bash
+    sudo systemctl start dnsmasq
+    sudo systemctl enable dnsmasq
+    ```
+    Update your `/etc/resolv.conf` file to use `dnsmasq` as the DNS resolver:
+    ```bash
+    nameserver 127.0.0.1
+    nameserver 8.8.8.8  # fallback
+    ```
 
 3. **Create a Workspace**
+- a) In case you have publicly accessible IP address, and a DNS entry configured to point to that IP address, the setup is
+   ```bash
+   bitswan workspace init --domain=workspace.test.io <workspace_name>
+   ```
 
-```bash
-bitswan workspace init --domain=workspace.test.io <workspace_name>
-```
-
-For local development run:
-
-```bash
-mkcerts --install
-```
-
-In this example we will use `workspace.localhost` domain for the local development
-
-and then run the command with --mkcert:
-
-```bash
-bitswan workspace init --domain=workspace.localhost --mkcert <workspace_name>
-```
-
-Update your hosts file by adding this:
-
-```bash
-127.0.0.1 workspace.localhost
-```
-at `/etc/hosts`. Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
+- b) For local development run:
+    
+   ```bash
+   mkcert --install
+   ```
+    
+   In this example we will use `workspace.localhost` domain for the local development
+    
+   and then run the command with `--mkcerts`:
+    
+   ```bash
+   bitswan workspace init --domain=workspace.localhost --mkcerts <workspace_name>
+   ```
+    
+   Update your hosts file by adding this:
+    
+   ```bash
+   127.0.0.1 workspace.localhost
+   ```
+   at `/etc/hosts` as mentioned in step 2.). Do this only when you want to run the workspaces locally. With the mkcerts and your domain in hosts file, you should be good to go. Without the certs you won't be able to open the editor later on using the https, which causes the editor to not work properly.
 
 4. **Access the Editor**
 
@@ -85,13 +113,13 @@ After logging in, you should see the editor with the Bitswan extension installed
 
 ![BitswanEditorVSCScreen](/images/webforms/vsc_page.png)
 
-7. **Start developing your automations**
+6. **Start developing your automations**
 Copy an example automation folder from the examples/ directory into your workspace/ folder within the editor.
 
-8. **Deploy your first automation**
+7. **Deploy your first automation**
 Click on Deploy Automation in the top-center Jupyter panel of the editor.
 
-9. **Manage your automations**
+8. **Manage your automations**
 Use the Bitswan VS Code extension (automatically installed via the CLI) to monitor automation status, view logs, restart, or stop processes as needed.
 
 --------------
