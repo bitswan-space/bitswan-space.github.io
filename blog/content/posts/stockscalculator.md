@@ -84,7 +84,9 @@ In this case we are using three fields for day, month and year.
 
 You can mix and match different sources and sinks to create your desired automation.
 
-TODO: [Add a link to the documentation with a full list of available Sources and Sinks.]
+List of available sources and sinks can be found in the [BitSwan library](https://github.com/bitswan-space/BitSwan/tree/master/bspump).
+List includes: Kafka, WebFormSource, Slack, MongoDB, PostgreSQL, GoogleDrive and many more...
+In case you would like to see another examples of working pipelines, you can check the [BitSwan examples](https://github.com/bitswan-space/BitSwan/tree/master/examples)
 
 ### 5. helper output formatting
 
