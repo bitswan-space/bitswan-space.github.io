@@ -1,6 +1,6 @@
 ---
 title: "Setting up a development environment for BitSwan on Windows 11"
-date: 2025-06-13T09:46:05+01:00
+date: 2025-06-20T15:48:08+01:00
 author: "patrik_kiseda"
 description: "This tutorial provides step-by-step guidance to set up your environment on Windows 11 for running and testing Bitswan pipelines. Using the Windows Subsystem for Linux (WSL), Visual Studio Code (VSCode), Python virtual environments, and Jupyter Notebook extensions, you'll establish an efficient workspace capable of executing Bitswan pipelines seamlessly.
 "
@@ -54,13 +54,13 @@ If WSL, VSCode, and Jupyter extensions are already installed, jump directly to:
 
 ### Installing WSL
 1. Open **PowerShell** as Administrator.  
-![PowerShell](\images\win11environmentsetup\win11environmentsetup-PowerShell.png)  
+![PowerShell](/images/win11environmentsetup/win11environmentsetup-PowerShell.png)  
 
 2. Run:
 ```powershell
 wsl --install
 ```
-![WSLInstallation](\images\win11environmentsetup\win11environmentsetup-WSLInstallation.png)  
+![WSLInstallation](/images/win11environmentsetup/win11environmentsetup-WSLInstallation.png)  
 3. Restart your PC when prompted.
 
 ### Installing VSCode
@@ -71,18 +71,18 @@ wsl --install
 1. Open VSCode.
 2. Click on **Extensions** (Ctrl+Shift+X).
 3. Search for "Jupyter" and install it.
-![gettingAJupyterNotebookExtension](\images\win11environmentsetup\win11environmentsetup-jupyterPlugin.png)
+![gettingAJupyterNotebookExtension](/images/win11environmentsetup/win11environmentsetup-jupyterPlugin.png)
 
 ---
 
 ## Cloning Bitswan Repository
-1. Launch WSL terminal.
+1. Launch WSL terminal and navigate to the desired directory where you want to store.
 2. Clone repository:
 ```bash
 git clone git@github.com:bitswan-space/BitSwan.git
 cd BitSwan
 ```
-![cloningARepo](\images\win11environmentsetup\win11environmentsetup-cloningARepository.png)
+![cloningARepo](/images/win11environmentsetup/win11environmentsetup-cloningARepository.png)
 
 ---
 
@@ -101,7 +101,7 @@ source venv/bin/activate
 ```bash
 pip3 install -e "[dev]"
 ```
-![activatingEnvironment](\images\win11environmentsetup\win11environmentsetup-activatingTheEnvironment.png)
+![activatingEnvironment](/images/win11environmentsetup/win11environmentsetup-activatingTheEnvironment.png)
 
 
 ## Running Bitswan Pipelines
@@ -116,7 +116,7 @@ bitswan notebook examples/WebForms/main.ipynb --watch
 ![RunningAutomaton](/images/win11environmentsetup/win11environmentsetup-runningAnAutomaton.png)
 
 You can test the basic functionality of some of the examples on **http://localhost:8080** in your browser:  
-![localTesting](\images\win11environmentsetup\win11environmentsetup-localTest.png)
+![localTesting](/images/win11environmentsetup/win11environmentsetup-localTest.png)
 
 
 ## Testing Pipelines
