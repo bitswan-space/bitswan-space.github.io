@@ -107,6 +107,19 @@ bitswan-notebookbook examples/WebForms/main.ipynb --watch
 You can test the basic functionality of some of the examples on **http://localhost:8080** in your browser:  
 ![localTesting](/images/win11environmentsetup/win11environmentsetup-localTest.png)
 
+## Running Notebooks Cell-by-Cell
+
+In addition to running the full pipeline via CLI, you can also open .ipynb files in VSCode and run them cell-by-cell using the built-in Jupyter notebook interface. This is really handy, if you want to learn, debug, and explore tre pipeline behavior step by step.
+
+⚠️ Kernel Issues: If the Python kernel is incorrect or missing (indicated by errors like "Kernel not found" or "Incorrect Python environment"), it means the notebook doesn't know which Python interpreter (environment) to use. Register your virtual environment as a kernel by running:
+
+```
+pip install ipykernel
+python -m ipykernel install --user --name=bitswan-env --display-name "Python (bitswan-env)"
+```
+
+Then, in VSCode, select this kernel (top-right corner of the notebook).
+![selectingKernel](/images/win11environmentsetup/win11environmentsetup-activatingTheKernel.png)
 
 ## Testing Pipelines
 Run pipeline tests:
