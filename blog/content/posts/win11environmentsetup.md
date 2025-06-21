@@ -1,5 +1,5 @@
 ---
-title: "Setting up a development environment for BitSwan on Windows 11"
+title: "Running Bitswan Pipelines on Windows 11 using WSL and Visual Studio Code"
 date: 2025-06-20T15:48:08+01:00
 author: "patrik_kiseda"
 description: "This tutorial provides step-by-step guidance to set up your environment on Windows 11 for running and testing Bitswan pipelines. Using the Windows Subsystem for Linux (WSL), Visual Studio Code (VSCode), Python virtual environments, and Jupyter Notebook extensions, you'll establish an efficient workspace capable of executing Bitswan pipelines seamlessly.
@@ -8,20 +8,6 @@ tags: ["Tutorial", "Windows 11", "Automatons", "Wsl", "Environment"]
 categories: ["Bitswan Workspace"]
 draft: false
 ---
-
-
-## Table of Contents
-
-- [Prerequisites](#prerequisites)
-- [Installation Scenarios](#installation-scenarios)
-  - [Scenario 1: Fresh Installation (No WSL, No VSCode)](#scenario-1)
-  - [Scenario 2: WSL and VSCode Installed (No Jupyter Extension)](#scenario-2)
-  - [Scenario 3: Complete Setup (WSL, VSCode, Jupyter Extensions Installed)](#scenario-3)
-- [Cloning Bitswan Repository](#cloning-bitswan-repository)
-- [Setting up Python and Virtual Environment](#setting-up-python-and-virtual-environment)
-- [Running Bitswan Pipelines](#running-bitswan-pipelines)
-- [Testing Pipelines](#testing-pipelines)
-- [Conclusion](#conclusion)
 
 ---
 
@@ -34,7 +20,8 @@ draft: false
 ## Installation Scenarios
 
 ### Scenario 1: Fresh Installation
-Follow these steps if you have neither WSL nor Visual Studio Code installed.
+Follow these steps if you have neither WSL nor Visual Studio Code installed.  
+(The simplest way to check if you have both of them installed you can just pressing the ```win+s``` shortcut and looking up the ```WSL``` and ```Visual Studio Code```/```vscode``` and seeing if they show up)
 
 1. [Install Windows Subsystem for Linux (WSL)](#installing-wsl)
 2. [Install Visual Studio Code](#installing-vscode)
@@ -61,7 +48,7 @@ If WSL, VSCode, and Jupyter extensions are already installed, jump directly to:
 wsl --install
 ```
 ![WSLInstallation](/images/win11environmentsetup/win11environmentsetup-WSLInstallation.png)  
-3. Restart your PC when prompted.
+3. Restart your PC when/if prompted.
 
 ### Installing VSCode
 1. Download VSCode from [official site](https://code.visualstudio.com/).
@@ -82,7 +69,9 @@ wsl --install
 git clone git@github.com:bitswan-space/BitSwan.git
 cd BitSwan
 ```
+**Best practice:** use your WSL home directory (~/projects) rather than /mnt/c to avoid permission issues (use the ```cd ~``` to drop into the wsl home directory).
 ![cloningARepo](/images/win11environmentsetup/win11environmentsetup-cloningARepository.png)
+
 
 ---
 
@@ -99,7 +88,7 @@ source venv/bin/activate
 ```
 3. Install dependencies:
 ```bash
-pip3 install -e "[dev]"
+pip3 install -e ".[dev]"
 ```
 ![activatingEnvironment](/images/win11environmentsetup/win11environmentsetup-activatingTheEnvironment.png)
 
@@ -107,11 +96,11 @@ pip3 install -e "[dev]"
 ## Running Bitswan Pipelines
 Run a pipeline example using:
 ```bash
-bitswan notebook examples/WebForms/main.ipynb
+bitswan-notebookbook examples/WebForms/main.ipynb
 ```
 Optionally watch for changes:
 ```bash
-bitswan notebook examples/WebForms/main.ipynb --watch
+bitswan-notebookbook examples/WebForms/main.ipynb --watch
 ```
 ![RunningAutomaton](/images/win11environmentsetup/win11environmentsetup-runningAnAutomaton.png)
 
@@ -122,16 +111,23 @@ You can test the basic functionality of some of the examples on **http://localho
 ## Testing Pipelines
 Run pipeline tests:
 ```bash
-bitswan notebook examples/Testing/InspectError/main.ipynb --test
+bitswan-notebookbook examples/Testing/InspectError/main.ipynb --test
 ```
 
 Automatically re-run tests on file changes:
 ```bash
-bitswan notebook examples/Testing/InspectError/main.ipynb --test --watch
+bitswan-notebookbook examples/Testing/InspectError/main.ipynb --test --watch
 ```
 ![RunningTests](/images/win11environmentsetup/win11environmentsetup-runningTests.png)
 
 ---
+
+## Troubleshooting & Common Issues
+
+Command not found? Confirm venv activation and installation (```pip3 install -e ".[dev]"```).
+
+Permission errors? Avoid Windows-mounted directories (/mnt/c) and use Linux-native directories.
+
 
 ## Conclusion
 You now have a fully operational environment to run and test Bitswan pipelines on Windows 11 using WSL and VSCode.
