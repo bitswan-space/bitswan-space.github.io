@@ -1,8 +1,9 @@
 ---
-title: "Running Bitswan Pipelines on Windows 11 using WSL and Visual Studio Code"
+title: "Setting up a local development environment for the Bitswan library on Windows 11"
 date: 2025-06-20T15:48:08+01:00
 author: "patrik_kiseda"
-description: "This tutorial provides step-by-step guidance to set up your environment on Windows 11 for running and testing Bitswan pipelines. Using the Windows Subsystem for Linux (WSL), Visual Studio Code (VSCode), Python virtual environments, and Jupyter Notebook extensions, you'll establish an efficient workspace capable of executing Bitswan pipelines seamlessly.
+description: "This tutorial provides step-by-step guidance to set up a local development environment on Windows 11 for contributing to the Bitswan library. If you’re looking to build or modify the Bitswan codebase itself.   
+  This guide shows how to install WSL, configure VSCode, create a Python virtual environment, and register Jupyter kernels.
 "
 tags: ["Tutorial", "Windows 11", "Automatons", "Wsl", "Environment"]
 categories: ["Bitswan Workspace"]
