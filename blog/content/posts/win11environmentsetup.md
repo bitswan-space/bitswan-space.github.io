@@ -97,11 +97,11 @@ pip3 install -e ".[dev]"
 ## Running Bitswan Pipelines
 Run a pipeline example using:
 ```bash
-bitswan-notebookbook examples/WebForms/main.ipynb
+bitswan-notebook examples/WebForms/main.ipynb
 ```
 Optionally watch for changes:
 ```bash
-bitswan-notebookbook examples/WebForms/main.ipynb --watch
+bitswan-notebook examples/WebForms/main.ipynb --watch
 ```
 ![RunningAutomaton](/images/win11environmentsetup/win11environmentsetup-runningAnAutomaton.png)
 
@@ -125,12 +125,12 @@ Then, in VSCode, select this kernel (top-right corner of the notebook).
 ## Testing Pipelines
 Run pipeline tests:
 ```bash
-bitswan-notebookbook examples/Testing/InspectError/main.ipynb --test
+bitswan-notebook examples/Testing/InspectError/main.ipynb --test
 ```
 
 Automatically re-run tests on file changes:
 ```bash
-bitswan-notebookbook examples/Testing/InspectError/main.ipynb --test --watch
+bitswan-notebook examples/Testing/InspectError/main.ipynb --test --watch
 ```
 ![RunningTests](/images/win11environmentsetup/win11environmentsetup-runningTests.png)
 
