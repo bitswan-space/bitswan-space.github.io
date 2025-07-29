@@ -11,3 +11,4 @@ draft: false
 ![gettingAJupyterNotebookExtension](/images/automation-with-cursor/Weather in Brno 0.png)
 
 ![StockChangePlot](/images/stockscalculator/output.png)
+123
