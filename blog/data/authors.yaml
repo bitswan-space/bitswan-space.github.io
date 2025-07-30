@@ -5,3 +5,11 @@ dolezal_jachym:
 patrik_kiseda:
   name: "Patrik Kiseda"
   image: "images/authors/kiseda.jpg"
+
+matej_outrata:
+  name: "Matěj Outrata"
+  image: "images/authors/outrata.jpeg"
+
+lukas_vecerka:
+  name: "Lukáš Večerka"
+  image: "images/authors/vecerka.jpeg"
