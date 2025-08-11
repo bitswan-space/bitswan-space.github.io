@@ -1,9 +1,9 @@
 ---
-title: "From Stock Automation to Daily Discord Updates with BitSwan"
-date: 2025-07-28T15:00:00+01:00
+title: "Anomaly to Insight: A Real-World Root Cause Analysis"
+date: 2025-08-13T15:00:00+01:00
 author: "lukas_vecerka"
-description: "Learn how to create and deploy a weather-checking automation using BitSwan and Cursor, an AI-powered coding assistant. This step-by-step guide shows how to use natural language to generate code, test locally with the BitSwan CLI, and deploy using the BitSwan VSCode extension. Ideal for developers looking to streamline automation with LLM-based tools."
-tags: ["BitSwan","Tutorial", "Cursor","AI coding assistant","LLM automation","Weather API"]
+description: "A real-world root cause analysis of a telecommunications system failure. Highlighting how sudden spikes in RAM usage led to CPU overloads, service degradation, and client disconnects. Using BitSwan and Grafana for monitoring, the team traced the issue to MongoDB's primary elections, revealing systemic memory and CPU pressures."
+tags: ["BitSwan", "Automation","Anomaly detection","Grafana","Telecommunication"]
 categories: ["BitSwan Automations"]
 draft: false
 ---
@@ -28,15 +28,17 @@ From a developer's perspective, this kind of pattern typically indicates memory 
 Then the edge devices began to disconnect. Monitoring alerted us to a sharp decline in connections, right when CPU and RAM peaked. Clients were either timing out or disconnecting.  
 Our device management dashboards matched up perfectly with Grafana’s backend data. The backend couldn’t keep up, and the ripple effect severely impacted the clients.
 
-![gettingAJupyterNotebookExtension](/images/Incident-report/MongoDB-Primary-Node-election.png)
-
-
 ### MongoDB Behavior  
 Just as we were troubleshooting CPU and memory, MongoDB added to the confusion. Within minutes of the system becoming overloaded, MongoDB's replica set automatically triggered two primary elections, meaning that the database detected that its current primary node was too slow or unresponsive—likely due to high CPU and memory pressure—and attempted to recover by choosing a new one. The fact that it had to do this twice in quick succession was a strong signal that the entire cluster was under severe stress. That’s a concerning sign—it means Mongo lost trust in the current primary, likely due to responsiveness issues. The problem spread across layers.
+
+![gettingAJupyterNotebookExtension](/images/Incident-report/MongoDB-Primary-Node-election.png)
+![gettingAJupyterNotebookExtension](/images/Incident-report/MongoDB-Primary-Node-election2.png)
 
 ## Correlation Analysis  
 By mapping the sequence of events, we confirmed the root cause: a RAM spike across G-nodes caused a CPU overload, which led to degraded services and client disconnects. MongoDB, already under strain, switched its primary twice.  
 Our Grafana timeline visualization made this cascade clear in hindsight. In real-time, it was more chaotic, but the data held all the clues.
+
+![gettingAJupyterNotebookExtension](/images/Incident-report/Abnormal-behavior-on-G-nodes.png)
 
 ## Solution  
 To stabilize the system, we first reduced the GENIEACS_MAX_CONCURRENT_REQUESTS setting in the GenieACS CWMP component from 1000 to 250. This adjustment immediately helped reduce backend load and brought temporary stability to the application layer.  
@@ -49,4 +51,3 @@ Here’s what we changed after the situation calmed:
 - Our Grafana dashboards now track GC and MongoDB elections as essential metrics.  
 - We adjusted alert thresholds and suppressed duplicates to reduce noise during high-load times.  
 - Most importantly, we added this scenario to our runbooks so that the next time it happens, the response will be quicker.
-
