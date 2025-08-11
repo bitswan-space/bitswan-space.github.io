@@ -20,6 +20,8 @@ By piecing together system metrics, timeline correlations, and engineering insti
 The first red flag appeared with a sudden spike in RAM usage across G1, G2, and G3 nodes. This wasn’t a gradual increase; it was a clear and immediate anomaly. Grafana detected it early, and the dashboards revealed that this wasn’t an isolated incident. Whatever caused it affected the cluster simultaneously.  
 When we looked at previous trends, this behavior stood out as abnormal. We started examining logs and upstream dependencies, suspecting that something systemic was causing memory pressure.
 
+![gettingAJupyterNotebookExtension](/images/Incident-report/Abnormal-behavior-on-G-nodes.png)
+
 ### CPU Load Analysis  
 As RAM usage increased, CPU load jumped just seconds later, especially on M1 and M2 nodes. This was not just high usage; it was the CPU being overwhelmed by load.  
 From a developer's perspective, this kind of pattern typically indicates memory saturation that leads to GC loops. It was clear this situation required immediate action.
@@ -37,8 +39,6 @@ Just as we were troubleshooting CPU and memory, MongoDB added to the confusion. 
 ## Correlation Analysis  
 By mapping the sequence of events, we confirmed the root cause: a RAM spike across G-nodes caused a CPU overload, which led to degraded services and client disconnects. MongoDB, already under strain, switched its primary twice.  
 Our Grafana timeline visualization made this cascade clear in hindsight. In real-time, it was more chaotic, but the data held all the clues.
-
-![gettingAJupyterNotebookExtension](/images/Incident-report/Abnormal-behavior-on-G-nodes.png)
 
 ## Solution  
 To stabilize the system, we first reduced the GENIEACS_MAX_CONCURRENT_REQUESTS setting in the GenieACS CWMP component from 1000 to 250. This adjustment immediately helped reduce backend load and brought temporary stability to the application layer.  
