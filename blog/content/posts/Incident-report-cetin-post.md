@@ -32,7 +32,7 @@ Whatever caused it affected the cluster simultaneously.
 When we looked at previous trends, this behavior stood out as abnormal.  
 We started examining logs and upstream dependencies, suspecting that something systemic was causing memory pressure.
 
-![crca1.png](/images/cetin-incident-report/crca1.png)
+![crca1.png](/images/cetin-incident-report/CRCA1.png)
 
 
 
@@ -51,7 +51,7 @@ The edge devices began to disconnect. **BitSwan monitoring** alerted us to a sha
 Our device management dashboards matched up perfectly with the ongoing analysis — including the spikes in RAM and CPU usage across the affected nodes.  
 The backend couldn’t keep up, and the ripple effect severely impacted the clients.
 
-![online-status.png](/images/cetin-incident-report/online-status-blur.png)
+![online-status.png](/images/cetin-incident-report/Online-status-Blur.png)
 
 
 
@@ -64,8 +64,8 @@ The system was already under some strain, and now a critical component was runni
 The profiling settings caused spikes in CPU and RAM usage, which worsened performance problems across the cluster.  
 What first looked like resource exhaustion was actually due to an unexpected failover to a poorly configured node.
 
-![crca2.png](/images/cetin-incident-report/crca2.png)
-![crca3.png](/images/cetin-incident-report/crca3.png)
+![crca2.png](/images/cetin-incident-report/CRCA2.png)
+![crca3.png](/images/cetin-incident-report/CRCA3.png)
 
 
 
@@ -96,7 +96,7 @@ This profiling configuration introduced significant overhead and degraded perfor
 To address this, we **disabled profiling on all m\*** MongoDB nodes.  
 Once this was done, both the RAM and CPU instability affecting the MongoDB primary were fully resolved.
 
-![crca4.png](/images/cetin-incident-report/crca4.png)
+![crca4.png](/images/cetin-incident-report/CRCA4.png)
 
 
 
